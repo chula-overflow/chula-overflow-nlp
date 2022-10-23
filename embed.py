@@ -9,4 +9,3 @@ def embed(sentence):
     return model.encode(sentence)
 
 # print(cosine_sim(embed("which statement is true about electron and hole mobility in semiconductors?"), embed('which is true about electron and hole mobility in semiconductors?')))
-print(type(embed('heelo')))
