@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def embed(sentence):
     """
     Input - (String) sentence to be embedded
