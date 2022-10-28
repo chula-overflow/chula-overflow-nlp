@@ -3,6 +3,7 @@ import uvicorn
 from typing import Union
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from sentence_tokenizer import sentence_tokenize
@@ -10,6 +11,18 @@ from embed import embed_sentence
 from measure import cosine_sim
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:4000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TokenizeReqBody(BaseModel):
   paragraph: str
@@ -30,7 +43,8 @@ def read_root():
 @app.post("/tokenize")
 def tokenize(body: TokenizeReqBody):
   sentences = sentence_tokenize(body.paragraph)
-  return sentences
+  return {"sentences": sentences}
+  # return {"sentences": ["Title A", "Title B", "Title C", "Title D"]}
 
 @app.post("/embed")
 def embed(body: EmbedReqBody):
